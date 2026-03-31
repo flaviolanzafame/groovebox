@@ -7,7 +7,7 @@
 ![Status](https://img.shields.io/badge/Status-Stable-brightgreen?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey?style=for-the-badge)
 
-**Groovebox** is a terminal-based music playlist manager. Add tracks, play your playlist, search by title, and view listening statistics from the command line.
+**Groovebox** is a console-based music playlist management system developed in C++. Groovebox allows users to create and manage a personalized playlist with up to 5 tracks, featuring playback tracking, search functionality, and playlist statistics.
 
 ---
 
