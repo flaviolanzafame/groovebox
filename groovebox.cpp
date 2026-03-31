@@ -1,387 +1,260 @@
+// ==============================================================
+//  Groovebox — Music Streaming Service
+//  Authors: Flavio Lanzafame, Christian Peritore, Wassim Marfoq
+// ==============================================================
+
 #include <iostream>
 #include <string>
+#include <limits>
+
 using namespace std;
+
 int main() {
-	// --- DICHIARAZIONE DELLE VARIABILI ---
-	// Variabili per memorizzare i dati di 5 brani (titolo, artista, durata, anno, ascolti)
-	string titolo1 = " ", titolo2 = " ", titolo3 = " ", titolo4 = " ", titolo5 = " ";
-	string artista1, artista2, artista3, artista4, artista5;
-	string temp_disp, cerca;
-	int durata1 = 0, durata2 = 0, durata3 = 0, durata4 = 0, durata5 = 0;
-	int anno1, anno2, anno3, anno4, anno5;
-	int stream1 = 0, stream2 = 0, stream3 = 0, stream4 = 0, stream5 = 0;
-	// Variabili di gestione: contatore brani, scelte e durata playlist
-	int numeroBrani = 0, scelta = 0, durataTotale = 0, bScelto = 0;
-	// Variabili booleane per la disponibilita' dei brani
-	bool disponibile1 = false, disponibile2 = false, disponibile3 = false, disponibile4 = false, disponibile5 = false, branoTrovato = false;
-	do {
-		// Menu' principale mostrato all'utente
-		cout << "\n------ Groovebox ------" << endl;
-		cout << "1. Aggiungi brano alla playlist" << endl;
-		cout << "2. Riproduci playlist" << endl;
-		cout << "3. Cerca brano per titolo" << endl;
-		cout << "4. Modifica disponibilita' brano" << endl;
-		cout << "5. Statistiche playlist" << endl;
-		cout << "6. Elimina ultimo brano" << endl;
-		cout << "7. Esci" << endl;
-		// Blocco per la scelta dell'opzione con controllo dell'errore (Input Validation)
-		do {
-			cout << "\nScegli un'opzione: ";
-			if (!(cin >> scelta) || scelta < 1 || scelta > 7) {
-				cout << "Errore: opzione non valida." << endl;
-				cin.clear();  // Pulisce lo stato di errore del buffer di input
-				cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Rimuove i caratteri residui nel buffer
-				scelta = 0;
-			}
-		} while (scelta < 1 || scelta > 7);
-		// --- GESTIONE DELLE OPZIONI TRAMITE SWITCH ---
-		switch (scelta) {
-		case 1: // Aggiungi brano alla playlist
-			if (numeroBrani >= 5) {
-				cout << "Errore: playlist piena." << endl;
-			} else {
-				// Sotto-switch per assegnare i dati alla variabile corretta (da 1 a 5)
-				switch (numeroBrani) {
-				case 0:
-					cout << "\n--- Brano 1---" << endl;
-					// Pulizia buffer prima di getline per evitare il salto dell'input
-					cin.ignore(numeric_limits<streamsize>::max(), '\n');
-					cout << "Titolo: ";
-					getline(cin, titolo1);
-					cout << "Artista: ";
-					getline(cin, artista1);
-					// Validazione della durata inserita (deve essere tra 30 e 600 secondi)
-					do {
-						durata1 = 0;
-						cout << "Durata (30-600 s): ";
-						cin >> durata1;
-						cin.clear();
-						cin.ignore(numeric_limits<streamsize>::max(), '\n');
-					} while (durata1 < 30 || durata1 > 600);
-					do {
-						cout << "Disponibile (si/no): ";
-						getline(cin, temp_disp);
-					} while (temp_disp != "si" && temp_disp != "no");
-					disponibile1 = (temp_disp == "si");
-					// Controllo anno: se disponibile deve essere nel passato, altrimenti nel futuro
-					if (disponibile1) {
-						do {
-							anno1 = 0;
-							cout << "Anno di pubblicazione: ";
-							cin >> anno1;
-							cin.clear();
-							cin.ignore(numeric_limits<streamsize>::max(), '\n');
-						} while (anno1 < 1700 || anno1 > 2026);
-					} else {
-						do {
-							anno1 = 0;
-							cout << "Anno di uscita previsto: ";
-							cin >> anno1;
-							cin.clear();
-							cin.ignore(numeric_limits<streamsize>::max(), '\n');
-						} while (anno1 < 2026);
-					}
-					break;
-				case 1:
-					cout << "\n--- Brano 2---" << endl;
-					cin.ignore(numeric_limits<streamsize>::max(), '\n');
-					cout << "Titolo: ";
-					getline(cin, titolo2);
-					cout << "Artista: ";
-					getline(cin, artista2);
-					do {
-						durata2 = 0;
-						cout << "Durata (30-600 s): ";
-						cin >> durata2;
-						cin.clear();
-						cin.ignore(numeric_limits<streamsize>::max(), '\n');
-					} while (durata2 < 30 || durata2 > 600);
-					do {
-						cout << "Disponibile (si/no): ";
-						getline(cin, temp_disp);
-					} while (temp_disp != "si" && temp_disp != "no");
-					disponibile2 = (temp_disp == "si");
-					if (disponibile2) {
-						do {
-							anno2 = 0;
-							cout << "Anno di pubblicazione: ";
-							cin >> anno2;
-							cin.clear();
-							cin.ignore(numeric_limits<streamsize>::max(), '\n');
-						} while (anno2 < 1700 || anno2 > 2026);
-					} else {
-						do {
-							anno2 = 0;
-							cout << "Anno di uscita previsto: ";
-							cin >> anno2;
-							cin.clear();
-							cin.ignore(numeric_limits<streamsize>::max(), '\n');
-						} while (anno2 < 2026);
-					}
-					break;
-				case 2:
-					cout << "\n--- Brano 3---" << endl;
-					cin.ignore(numeric_limits<streamsize>::max(), '\n');
-					cout << "Titolo: ";
-					getline(cin, titolo3);
-					cout << "Artista: ";
-					getline(cin, artista3);
-					do {
-						durata3 = 0;
-						cout << "Durata (30-600 s): ";
-						cin >> durata3;
-						cin.clear();
-						cin.ignore(numeric_limits<streamsize>::max(), '\n');
-					} while (durata3 < 30 || durata3 > 600);
-					do {
-						cout << "Disponibile (si/no): ";
-						getline(cin, temp_disp);
-					} while (temp_disp != "si" && temp_disp != "no");
-					disponibile3 = (temp_disp == "si");
-					if (disponibile3) {
-						do {
-							anno3 = 0;
-							cout << "Anno di pubblicazione: ";
-							cin >> anno3;
-							cin.clear();
-							cin.ignore(numeric_limits<streamsize>::max(), '\n');
-						} while (anno3 < 1700 || anno3 > 2026);
-					} else {
-						do {
-							anno3 = 0;
-							cout << "Anno di uscita previsto: ";
-							cin >> anno3;
-							cin.clear();
-							cin.ignore(numeric_limits<streamsize>::max(), '\n');
-						} while (anno3 < 2026);
-					}
-					break;
-				case 3:
-					cout << "\n--- Brano 4---" << endl;
-					cin.ignore(numeric_limits<streamsize>::max(), '\n');
-					cout << "Titolo: ";
-					getline(cin, titolo4);
-					cout << "Artista: ";
-					getline(cin, artista4);
-					do {
-						durata4 = 0;
-						cout << "Durata (30-600 s): ";
-						cin >> durata4;
-						cin.clear();
-						cin.ignore(numeric_limits<streamsize>::max(), '\n');
-					} while (durata4 < 30 || durata4 > 600);
-					do {
-						cout << "Disponibile (si/no): ";
-						getline(cin, temp_disp);
-					} while (temp_disp != "si" && temp_disp != "no");
-					disponibile4 = (temp_disp == "si");
-					if (disponibile4) {
-						do {
-							anno4 = 0;
-							cout << "Anno di pubblicazione: ";
-							cin >> anno4;
-							cin.clear();
-							cin.ignore(numeric_limits<streamsize>::max(), '\n');
-						} while (anno4 < 1700 || anno4 > 2026);
-					} else {
-						do {
-							anno4 = 0;
-							cout << "Anno di uscita previsto: ";
-							cin >> anno4;
-							cin.clear();
-							cin.ignore(numeric_limits<streamsize>::max(), '\n');
-						} while (anno4 < 2026);
-					}
-					break;
-				case 4:
-					cout << "\n--- Brano 5---" << endl;
-					cin.ignore(numeric_limits<streamsize>::max(), '\n');
-					cout << "Titolo: ";
-					getline(cin, titolo5);
-					cout << "Artista: ";
-					getline(cin, artista5);
-					do {
-						durata5 = 0;
-						cout << "Durata (30-600 s): ";
-						cin >> durata5;
-						cin.clear();
-						cin.ignore(numeric_limits<streamsize>::max(), '\n');
-					} while (durata5 < 30 || durata5 > 600);
-					do {
-						cout << "Disponibile (si/no): ";
-						getline(cin, temp_disp);
-					} while (temp_disp != "si" && temp_disp != "no");
-					disponibile5 = (temp_disp == "si");
-					if (disponibile5) {
-						do {
-							anno5 = 0;
-							cout << "Anno di pubblicazione: ";
-							cin >> anno5;
-							cin.clear();
-							cin.ignore(numeric_limits<streamsize>::max(), '\n');
-						} while (anno5 < 1700 || anno5 > 2026);
-					} else {
-						do {
-							anno5 = 0;
-							cout << "Anno di uscita previsto: ";
-							cin >> anno5;
-							cin.clear();
-							cin.ignore(numeric_limits<streamsize>::max(), '\n');
-						} while (anno5 < 2026);
-					}
-					break;
-				}
-				numeroBrani++; // Incremento contatore brani caricati
-				cout << "Brano aggiunto con successo!" << endl;
-			}
-			break;
-		case 2: // Riproduci playlist
-			// Blocco per mostrare tutti i brani caricati finora
-			if (numeroBrani == 0) {
-				cout << "La playlist e' vuota." << endl;
-			} else {
-				cout << "\n--- RIPRODUZIONE PLAYLIST ---" << endl;
-				if (numeroBrani >= 1) {
-					cout << "1. " << titolo1 << " - " << artista1 << " (" << durata1 << " s) ";
-					if (disponibile1) {
-						cout << "[" << anno1 << "]" << endl;
-						stream1++; // Incremento contatore ascolti
-					} else
-						cout << "[Non disponibile. Esce nel " << anno1 << "]" << endl;
-				}
-				if (numeroBrani >= 2) {
-					cout << "2. " << titolo2 << " - " << artista2 << " (" << durata2 << " s) ";
-					if (disponibile2) {
-						cout << "[" << anno2 << "]" << endl;
-						stream2++;
-					} else
-						cout << "[Non disponibile. Esce nel " << anno2 << "]" << endl;
-				}
-				if (numeroBrani >= 3) {
-					cout << "3. " << titolo3 << " - " << artista3 << " (" << durata3 << " s) ";
-					if (disponibile3) {
-						cout << "[" << anno3 << "]" << endl;
-						stream3++;
-					} else
-						cout << "[Non disponibile. Esce nel " << anno3 << "]" << endl;
-				}
-				if (numeroBrani >= 4) {
-					cout << "4. " << titolo4 << " - " << artista4 << " (" << durata4 << " s) ";
-					if (disponibile4) {
-						cout << "[" << anno4 << "]" << endl;
-						stream4++;
-					} else
-						cout << "[Non disponibile. Esce nel " << anno4 << "]" << endl;
-				}
-				if (numeroBrani >= 5) {
-					cout << "5. " << titolo5 << " - " << artista5 << " (" << durata5 << " s) ";
-					if (disponibile5) {
-						cout << "[" << anno5 << "]" << endl;
-						stream5++;
-					} else
-						cout << "[Non disponibile. Esce nel " << anno5 << "]" << endl;
-				}
-			}
-			break;
-		case 3: // Cerca brano
-			// Blocco per la ricerca testuale all'interno dei titoli inseriti
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			cout << "Cerca brano: ";
-			cin >> cerca;
-			getline(cin, cerca);
-			/* titoloX.find(cerca) restituisce la posizione della parola se trovata,
-			   altrimenti restituisce string::npos */
-			if (titolo1.find(cerca) != string::npos)  {
-				cout << "Trovato: " << titolo1 << " " << artista1 << " (" << durata1 << " s) [" << anno1 << "]" << endl;
-				branoTrovato = true;
-			}
-			if (titolo2.find(cerca) != string::npos) {
-				cout << "Trovato: " << titolo2 << " " << artista2 << " (" << durata2 << " s) [" << anno2 << "]" << endl;
-				branoTrovato = true;
-			}
-			if (titolo3.find(cerca) != string::npos) {
-				cout << "Trovato: " << titolo3 << " " << artista3 << " (" << durata3 << " s) [" << anno3 << "]" << endl;
-				branoTrovato = true;
-			}
-			if (titolo4.find(cerca) != string::npos) {
-				cout << "Trovato: " << titolo4 << " " << artista4 << " (" << durata4 << " s) [" << anno4 << "]" << endl;
-				branoTrovato = true;
-			}
-			if (titolo5.find(cerca) != string::npos) {
-				cout << "Trovato: " << titolo5 << " " << artista5 << " (" << durata5 << " s) [" << anno5 << "]" << endl;
-				branoTrovato = true;
-			}
-			if (branoTrovato == false) {
-				cout<<"Brano non trovato, riprova."<<endl;
-			}
-			break;
-		case 4: // Modifica disponibilita'
-			// Blocco per invertire lo stato disponibile/non disponibile (Toggle)
-			if (numeroBrani == 0) {
-				cout << "Playlist vuota." << endl;
-			} else {
-				cout << "Inserisci numero brano da modificare: ";
-				cin >> bScelto;
-				if (bScelto >= 1 && bScelto <= numeroBrani) {
-					switch (bScelto) {
-					case 1:
-						disponibile1 = !disponibile1;
-						break;
-					case 2:
-						disponibile2 = !disponibile2;
-						break;
-					case 3:
-						disponibile3 = !disponibile3;
-						break;
-					case 4:
-						disponibile4 = !disponibile4;
-						break;
-					case 5:
-						disponibile5 = !disponibile5;
-						break;
-					}
-					cout << "Stato aggiornato." << endl;
-				} else {
-					cout << "Errore: Selezione non valida." << endl;
-					cin.clear();
-					cin.ignore(numeric_limits<streamsize>::max(), '\n');
-					bScelto = 0;
-				}
-			}
-			break;
-		case 5: // Statistiche
-			// Calcolo della durata totale sommando i valori e calcolo della media
-			cout << "\n------ STATISTICHE ------\n";
-			durataTotale = durata1 + durata2 + durata3 + durata4 + durata5;
-			cout << "Brani in playlist: " << numeroBrani << endl;
-			cout << "Durata totale: " << durataTotale << " s" << endl;
-			if (numeroBrani > 0)
-				cout << "Durata media: " << durataTotale / numeroBrani << " s" << endl;
-			// Algoritmo di confronto per determinare il brano con piu' stream
-			cout<<"Brano piu' ascoltato: ";
-			if (stream1 > stream2 && stream1 > stream3 && stream1 > stream4 && stream1 > stream5)
-				cout << titolo1 << " - " << artista1 << endl;
-			else if (stream2 > stream1 && stream2 > stream3 && stream2 > stream4 && stream2 > stream5)
-				cout << titolo2 << " - " << artista2 << endl;
-			else if (stream3 > stream1 && stream3 > stream2 && stream3 > stream4 && stream3 > stream5)
-				cout << titolo3 << " - " << artista3 << endl;
-			else if (stream4 > stream1 && stream4 > stream2 && stream4 > stream3 && stream4 > stream5)
-				cout << titolo4 << " - " << artista4 << endl;
-			else if (stream5 > stream1 && stream5 > stream2 && stream5 > stream3 && stream5 > stream4)
-				cout << titolo5 << " - " << artista5 << endl;
-			else
-				cout << "/" << endl;
-			break;
-		case 6: // Elimina ultimo brano
-			// Rimuove logicamente l'ultimo brano inserito decrementando il contatore
-			if (numeroBrani > 0) {
-				numeroBrani--;
-				cout << "\nUltimo brano rimosso correttamente." << endl;
-			} else
-				cout << "\nErrore: la playlist e' gia' vuota." << endl;
-			break;
-		}
-	} while (scelta != 7); // Uscita dal programma
-	cout << "\nGrazie per aver usato Groovebox!" << endl;
-	return 0;
+    // ============================================================
+    //  TRACK DATA STORAGE
+    // ============================================================
+    string trackTitles[5] = {"", "", "", "", ""};
+    string trackArtists[5] = {"", "", "", "", ""};
+    int trackDurations[5] = {0, 0, 0, 0, 0};
+    int trackYears[5] = {0, 0, 0, 0, 0};
+    int trackStreams[5] = {0, 0, 0, 0, 0};
+    bool trackAvailable[5] = {false, false, false, false, false};
+    
+    // ------------------------------------------------------------
+    //  PROGRAM STATE VARIABLES
+    // ------------------------------------------------------------
+    int trackCount = 0;              // Number of tracks in playlist (0-5)
+    int userChoice = 0;              // User's menu selection
+    int selectedTrackIndex = 0;      // Temporary track selection storage
+    bool trackFound = false;         // Flag for search operations
+    
+    do {
+        // ------------------------------------------------------------
+        //  DISPLAY MAIN MENU - 7 options for music management
+        // ------------------------------------------------------------
+        cout << "\n------ Groovebox ------" << endl;
+        cout << "1. Add track to playlist" << endl;
+        cout << "2. Play playlist" << endl;
+        cout << "3. Search track by title" << endl;
+        cout << "4. Toggle track availability" << endl;
+        cout << "5. Playlist statistics" << endl;
+        cout << "6. Remove last track" << endl;
+        cout << "7. Exit" << endl;
+        
+        // ------------------------------------------------------------
+        //  INPUT VALIDATION - Ensures user selects a valid menu option (1-7)
+        // ------------------------------------------------------------
+        do {
+            cout << "\nSelect an option: ";
+            if (!(cin >> userChoice) || userChoice < 1 || userChoice > 7) {
+                cout << "Error: Invalid option." << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                userChoice = 0;
+            }
+        } while (userChoice < 1 || userChoice > 7);
+        
+        // ============================================================
+        //  MENU HANDLER - Process user selection with switch-case structure
+        // ============================================================
+        switch (userChoice) {
+        // ------------------------------------------------------------
+        //  CASE 1 - Add track to playlist
+        //  Collects all track information with input validation
+        // ------------------------------------------------------------
+        case 1:
+            if (trackCount >= 5) {
+                cout << "Error: Playlist is full (maximum 5 tracks)." << endl;
+            } else {
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                
+                cout << "\n--- Track " << (trackCount + 1) << " ---" << endl;
+                
+                // ----- Track title input -----
+                cout << "Title: ";
+                getline(cin, trackTitles[trackCount]);
+                
+                // ----- Track artist input -----
+                cout << "Artist: ";
+                getline(cin, trackArtists[trackCount]);
+                
+                // ----- Duration validation (30-600 seconds) -----
+                do {
+                    cout << "Duration (30-600 s): ";
+                    cin >> trackDurations[trackCount];
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                } while (trackDurations[trackCount] < 30 || trackDurations[trackCount] > 600);
+                
+                // ----- Availability input (yes/no) -----
+                string availabilityInput;
+                do {
+                    cout << "Available (yes/no): ";
+                    getline(cin, availabilityInput);
+                } while (availabilityInput != "yes" && availabilityInput != "no");
+                trackAvailable[trackCount] = (availabilityInput == "yes");
+                
+                // ----- Year validation based on availability -----
+                if (trackAvailable[trackCount]) {
+                    // Available tracks: year must be between 1700-2026
+                    do {
+                        cout << "Release year: ";
+                        cin >> trackYears[trackCount];
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    } while (trackYears[trackCount] < 1700 || trackYears[trackCount] > 2026);
+                } else {
+                    // Unavailable tracks: year must be in the future (2026+)
+                    do {
+                        cout << "Expected release year: ";
+                        cin >> trackYears[trackCount];
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    } while (trackYears[trackCount] < 2026);
+                }
+                
+                trackCount++;
+                cout << "Track added successfully!" << endl;
+            }
+            break;
+        
+        // ------------------------------------------------------------
+        //  CASE 2 - Play playlist
+        //  Displays all tracks and increments play counts
+        // ------------------------------------------------------------
+        case 2:
+            if (trackCount == 0) {
+                cout << "The playlist is empty." << endl;
+            } else {
+                cout << "\n--- PLAYING PLAYLIST ---" << endl;
+                
+                for (int i = 0; i < trackCount; i++) {
+                    cout << (i + 1) << ". " << trackTitles[i] << " - " << trackArtists[i] 
+                         << " (" << trackDurations[i] << " s) ";
+                    
+                    if (trackAvailable[i]) {
+                        cout << "[" << trackYears[i] << "]" << endl;
+                        trackStreams[i]++;  // Increment play counter
+                    } else {
+                        cout << "[Not available. Releases in " << trackYears[i] << "]" << endl;
+                    }
+                }
+            }
+            break;
+        
+        // ------------------------------------------------------------
+        //  CASE 3 - Search track by title
+        //  Performs substring search across all track titles
+        // ------------------------------------------------------------
+        case 3:
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            
+            string searchTerm;
+            cout << "Search track: ";
+            cin >> searchTerm;
+            getline(cin, searchTerm);  // Capture full search term
+            
+            trackFound = false;
+            
+            for (int i = 0; i < trackCount; i++) {
+                // Check if searchTerm appears anywhere in the title
+                if (trackTitles[i].find(searchTerm) != string::npos) {
+                    cout << "Found: " << trackTitles[i] << " " << trackArtists[i] 
+                         << " (" << trackDurations[i] << " s) [" << trackYears[i] << "]" << endl;
+                    trackFound = true;
+                }
+            }
+            
+            if (!trackFound) {
+                cout << "Track not found. Please try again." << endl;
+            }
+            break;
+        
+        // ------------------------------------------------------------
+        //  CASE 4 - Toggle track availability
+        //  Inverts availability status for a selected track
+        // ------------------------------------------------------------
+        case 4:
+            if (trackCount == 0) {
+                cout << "Playlist is empty." << endl;
+            } else {
+                cout << "Enter track number to modify (1-" << trackCount << "): ";
+                cin >> selectedTrackIndex;
+                
+                if (selectedTrackIndex >= 1 && selectedTrackIndex <= trackCount) {
+                    // Toggle boolean value (convert to zero-based index)
+                    trackAvailable[selectedTrackIndex - 1] = !trackAvailable[selectedTrackIndex - 1];
+                    cout << "Availability status updated." << endl;
+                } else {
+                    cout << "Error: Invalid selection." << endl;
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                }
+            }
+            break;
+        
+        // ------------------------------------------------------------
+        //  CASE 5 - Playlist statistics
+        //  Calculates total duration, average, and most played track
+        // ------------------------------------------------------------
+        case 5:
+            cout << "\n------ STATISTICS ------\n";
+            
+            // ----- Calculate total playlist duration -----
+            int totalDuration = 0;
+            for (int i = 0; i < trackCount; i++) {
+                totalDuration += trackDurations[i];
+            }
+            
+            cout << "Tracks in playlist: " << trackCount << endl;
+            cout << "Total duration: " << totalDuration << " seconds" << endl;
+            
+            if (trackCount > 0) {
+                cout << "Average duration: " << (totalDuration / trackCount) << " seconds" << endl;
+            }
+            
+            // ----- Find track with most plays -----
+            cout << "Most played track: ";
+            
+            int maxStreamsIndex = 0;
+            bool hasStreams = false;
+            
+            for (int i = 0; i < trackCount; i++) {
+                if (trackStreams[i] > 0) {
+                    hasStreams = true;
+                    if (trackStreams[i] > trackStreams[maxStreamsIndex]) {
+                        maxStreamsIndex = i;
+                    }
+                }
+            }
+            
+            if (hasStreams) {
+                cout << trackTitles[maxStreamsIndex] << " - " << trackArtists[maxStreamsIndex] << endl;
+            } else {
+                cout << "No tracks have been played yet." << endl;
+            }
+            break;
+        
+        // ------------------------------------------------------------
+        //  CASE 6 - Remove last track
+        //  Logical deletion by decrementing track counter
+        // ------------------------------------------------------------
+        case 6:
+            if (trackCount > 0) {
+                trackCount--;
+                cout << "\nLast track removed successfully." << endl;
+            } else {
+                cout << "\nError: Playlist is already empty." << endl;
+            }
+            break;
+        }
+        
+    } while (userChoice != 7);  // Continue until exit option selected
+    
+    // ============================================================
+    //  PROGRAM TERMINATION
+    // ============================================================
+    cout << "\nThank you for using Groovebox!" << endl;
+	
+    return 0;
 }
