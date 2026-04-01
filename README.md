@@ -105,6 +105,6 @@ Released under the [MIT License](LICENSE).
 
 <div align="center">
 
-Built with C++ · and TonyPitony in the <3
+Built with C++
 
 </div>
